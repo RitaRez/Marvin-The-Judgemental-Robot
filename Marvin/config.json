@@ -1,0 +1,23 @@
+{
+	"prefix": "?",
+    "token": "NzAyNTMxODU1OTAzMzU4OTg3.XqBaKg.Ef_FlMZLgApSy8sFBB3ejUx6TKY",
+    "api": "https://evilinsult.com/generate_insult.php?lang=en&type=json",
+    "meaning_of_life": 42,
+    "master": 422055291534704640, 
+    "good_taste_messages": {
+        "0": "I love that song! You should be the only person able to choose songs.",
+        "1": "Oh yeah, nice choice!",
+        "2": "You sir, have a great taste in music",
+        "3": "What a choice ladies and gentleman, keep vibing!",
+        "4": "Thats what i call music, great choice!",
+        "5": "Lovely harmonics and a touching theme! What a talented musician hun?"
+    },
+    "bad_taste_messages": {
+        "0": "I feel obligated to tell you that this song really sucks...",
+        "1": "Oh great choice, but what about next time you keep your poor taste in music to yourself?",
+        "2": "For fucks sake, cant you pick a decent song?",
+        "3": "Thats it, someone ban this ignorant human being!",
+        "4": "UGHHHHHH, why do you only listen to worthless songs?",
+        "5": "Mozart, Bach, Bethoven, Lizt, and you pick that sort of hot flaming garbage?"
+    }
+}
