@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
-const { api, prefix, token, master, good_taste_messages, bad_taste_messages } = require("./config.json");
+const { api, prefix, token, master } = require("./config.json");
+const { good_taste_messages, bad_taste_messages } = require("./constants.json");
+
 const https = require('https');
 const ytdl = require("ytdl-core");
 const client = new Discord.Client();
@@ -22,7 +24,7 @@ client.on("message", async message => {
   if (!message.content.startsWith(prefix)) return;
 
   const serverQueue = queue.get(message.guild.id);
-  const args = message.content.slice(prefix.length).split(' ');
+  let args = message.content.slice(prefix.length).split(' ');
   let random_number = await randomize_number(5);
   if(args[0] === "insult") await insult(message, args[1])
   
@@ -30,8 +32,8 @@ client.on("message", async message => {
     if(message.author.id == master)  message.channel.send(good_taste_messages[random_number]);
     else message.channel.send(bad_taste_messages[random_number]);
     
-    if (message.content.startsWith(`${prefix}add`)) await add_in_playlist(message, serverQueue, "add");
-    if (message.content.startsWith(`${prefix}play`)) await add_in_playlist(message, serverQueue, "play");
+    if (message.content.startsWith(`${prefix}play`)) await add_in_playlist(message, serverQueue, "add");
+    if (message.content.startsWith(`${prefix}play-rn`)) await add_in_playlist(message, serverQueue, "play");
   }
   
   else if (message.content.startsWith(`${prefix}skip`)) await skip(message, serverQueue);
@@ -73,7 +75,7 @@ async function randomize_number(max) {
 }
 
 async function add_in_playlist(message, serverQueue, command) {
-  const args = message.content.split(" ");
+  let args = message.content.split(" ");
 
   const voiceChannel = message.member.voice.channel;
   if (!voiceChannel)
@@ -86,8 +88,8 @@ async function add_in_playlist(message, serverQueue, command) {
       "I need the permissions to join and speak in your voice channel!"
     );
   }
-
-  const songInfo = await ytdl.getInfo(args[1]);
+  console.log("Playing: " + args[1]);
+  const songInfo = await ytdl.getInfo(args[1]); //with cmnd node has to be index 2, npm start 1. dunno y, maybe the node versions diferent
   const song = {
     title: songInfo.title,
     url: songInfo.video_url
