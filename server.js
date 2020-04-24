@@ -8,15 +8,15 @@ const client = new Discord.Client();
 const queue = new Map();
 
 client.once("ready", () => {
-  console.log("Ready!");
+  //console.log("Ready!");
 });
 
 client.once("reconnecting", () => {
-  console.log("Reconnecting!");
+  //console.log("Reconnecting!");
 });
 
 client.once("disconnect", () => {
-  console.log("Disconnect!");
+  //console.log("Disconnect!");
 });
 
 client.on('message', async message => {
@@ -56,7 +56,7 @@ async function insult(message, victim){
   });
 
   resp.on('end', () => {
-    console.log(JSON.parse(data).insult);
+    //console.log(JSON.parse(data).insult);
     let response = JSON.parse(data).insult;
     if(master.includes(message.author.id)) message.channel.send(victim + " " + response);
     else message.channel.send("Fuck you, <@" + message.author.id + ">");
@@ -100,7 +100,7 @@ async function add_in_playlist(message, serverQueue, command) {
       "I need the permissions to join and speak in your voice channel!"
     );
   }
-  console.log("Playing: " + args[1]);
+  //console.log("Playing: " + args[1]);
   const songInfo = await ytdl.getInfo(args[1]); //with cmnd node has to be index 2, npm start 1. dunno y, maybe the node versions diferent
   const song = {
     title: songInfo.title,
@@ -129,7 +129,7 @@ async function add_in_playlist(message, serverQueue, command) {
       queueContruct.connection = connection;
       play(message.guild, queueContruct.songs[0]);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       queue.delete(message.guild.id);
       return message.channel.send(err);
     }
@@ -172,7 +172,6 @@ function play(guild, song) {
       serverQueue.songs.shift();
       play(guild, serverQueue.songs[0]);
     })
-    .on("error", error => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
   serverQueue.textChannel.send(`Start playing: **${song.title}**`);
 }
