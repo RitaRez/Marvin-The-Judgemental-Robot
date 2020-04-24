@@ -3,7 +3,9 @@ module.exports = {
         {
           name: 'marvin-bot',
           script: './server.js',
-          watch: true,
+	  env: {
+	    NODE_NO_WARNINGS: 1
+	  },
           log_date_format: 'DD-MM-YYYY HH:mm Z',
           error_file: 'logs/error.log',
           out_file: 'logs/out.log',
