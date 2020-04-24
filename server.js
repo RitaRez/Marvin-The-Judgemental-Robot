@@ -26,7 +26,7 @@ client.on('message', async message => {
   let args = message.content.slice(prefix.length).split(' ');
   let text = message.content.split('?').join('').toLowerCase();
 
-  if(args[0] === "-v" || args[0] === "version") message.channel.send("The curren version is: " + version)
+  if(args[0] === "-v" || args[0] === "version") message.channel.send("The current version is: " + version)
   else if(args[0] === "insult") await insult(message, args[1])
   else if(message.content.includes('universe') || message.content.includes('Universe')) await universe(message)
   else if (asks.includes(text)) await nihilism(message)
