@@ -22,10 +22,9 @@ client.once("disconnect", () => {
 client.on('message', async message => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
-
   const serverQueue = queue.get(message.guild.id);
   let args = message.content.slice(prefix.length).split(' ');
-  let text = message.content.split('?').join('');
+  let text = message.content.split('?').join('').toLowerCase();
 
 
   console.log(text)
@@ -42,6 +41,11 @@ client.on('message', async message => {
 
 
 });
+
+async function randomize_number(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 // --------------------------- OFENSIVE BUDDY -----------------------------------------
 
 async function insult(message, victim){
@@ -55,20 +59,18 @@ async function insult(message, victim){
   resp.on('end', () => {
     console.log(JSON.parse(data).insult);
     let response = JSON.parse(data).insult;
-    if(message.author.id == master) message.channel.send(victim + " " + response);
+    if(master.includes(message.author.id)) message.channel.send(victim + " " + response);
     else message.channel.send("Fuck you, <@" + message.author.id + ">");
   });
 
   }).on("error", (err) => {
-    if(message.author.id == master) message.channel.send("Fuck you, " + victim);
+    if(master.includes(message.author.id)) message.channel.send("Fuck you, " + victim);
     else message.channel.send("Fuck you, <@" + message.author.id + ">");
   });
-
-  
 }
 
 async function nihilism(message){
-  if(message.author.id == master) message.channel.send("I'm feeling lovely now that i'm talking with you master.");
+  if(master.includes(message.author.id)) message.channel.send("I'm feeling lovely now that i'm talking with you master.");
   else {
     let random = await randomize_number(20);
     message.channel.send(awnsers[random]);
@@ -76,17 +78,13 @@ async function nihilism(message){
 }
 
 async function universe(message){
-  if(message.author.id == master)
+  if(master.includes(message.author.id))
     message.channel.send("42, master.");
   else {
     message.channel.send("You want me to say 42 right dickhead? Well guess what? Fuck you!");
   }  
 }
 // --------------------------- MUSIC PLAYER --------------------------------------------
-
-async function randomize_number(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
 
 async function add_in_playlist(message, serverQueue, command) { 
   let args = message.content.split(" ");
@@ -110,7 +108,7 @@ async function add_in_playlist(message, serverQueue, command) {
     url: songInfo.video_url
   };
   
-  if(message.author.id == master)  message.channel.send(good_taste_messages[random_number]);
+  if(master.includes(message.author.id))  message.channel.send(good_taste_messages[random_number]);
   else message.channel.send(bad_taste_messages[random_number]);
    
   if (!serverQueue || command == "play") {

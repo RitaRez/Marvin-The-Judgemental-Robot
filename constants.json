@@ -36,9 +36,11 @@
         "howdy", 
         "what are your thoughts right now",
         "what are you thinking",
-        "what are you feelin?",
+        "what are you feelin",
         "are you alright",
-        "fuck you"
+        "fuck you",
+        "marvin, how are you doing",
+        "how are you doing"
     ],
     "awnsers":{
         "0": "My existence is painfull.",
