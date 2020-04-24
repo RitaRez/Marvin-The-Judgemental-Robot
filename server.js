@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const { api, prefix, token, master } = require("./config.json");
 const { asks, awnsers, good_taste_messages, bad_taste_messages } = require("./constants.json");
-
+const { version } = require("./package.json");
 const https = require('https');
 const ytdl = require("ytdl-core");
 const client = new Discord.Client();
@@ -26,8 +26,7 @@ client.on('message', async message => {
   let args = message.content.slice(prefix.length).split(' ');
   let text = message.content.split('?').join('').toLowerCase();
 
-
-  console.log(text)
+  if(args[0] === "-v" || args[0] === "version") message.channel.send("The curren version is: " + version)
   if(args[0] === "insult") await insult(message, args[1])
   else if(message.content.includes('universe') || message.content.includes('Universe')) await universe(message)
   else if (asks.includes(text)) await nihilism(message)
