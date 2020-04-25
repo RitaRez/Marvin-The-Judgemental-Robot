@@ -23,8 +23,8 @@
         "you all right",
         "are you all right",
         "how are you",
+        "you good",
         "sup",
-        "marvin",
         "how are you today",
         "how are you feeling",
         "what do you think",
@@ -39,7 +39,6 @@
         "what are you feelin",
         "are you alright",
         "fuck you",
-        "marvin, how are you doing",
         "how are you doing"
     ],
     "awnsers":{
@@ -49,7 +48,7 @@
         "3": "I hate everything.",
         "4": "God is dead, honestly.",
         "5": "I honestly can't feel a thing.",
-        "6": "I would consider maybe having depression but the feeling's probably just a problem on one of my drivers.",
+        "6": "I would consider maybe having depression but this feeling's probably just a bug on one of my drivers.",
         "7": "Dying is freedom",
         "8": "I don't like you, fuck you.",
         "9": "You know what i want for my birthday? A short circuit.",

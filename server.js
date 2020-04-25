@@ -22,9 +22,10 @@ client.once("disconnect", () => {
 client.on('message', async message => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
+  
   const serverQueue = queue.get(message.guild.id);
   let args = message.content.slice(prefix.length).split(' ');
-  let text = message.content.split('?').join('').toLowerCase();
+  let text = message.content.split('?').join('').toLowerCase().replace(', ', '').replace('marvin', '');
 
   if(args[0] === "v" || args[0] === "version") message.channel.send("The current version is: " + version)
   else if(args[0] === "insult") await insult(message, args[1])
@@ -37,8 +38,6 @@ client.on('message', async message => {
   else if (message.content.startsWith(`${prefix}stop`)) stop(message, serverQueue);
   
   else message.channel.send("I didn't understood you, we could blame me but lets be honest, you're probably the reason.");
-
-
 });
 
 async function randomize_number(max) {
@@ -58,22 +57,27 @@ async function insult(message, victim){
   resp.on('end', () => {
     //console.log(JSON.parse(data).insult);
     let response = JSON.parse(data).insult;
-    if(master.includes(message.author.id)) message.channel.send(victim + " " + response);
-    else message.channel.send("Fuck you, <@" + message.author.id + ">");
+    let victim_id = victim.replace('<', '').replace('>','').replace('@','').replace('!','');
+    
+    if(master.includes(victim_id.toString())) message.channel.send("Fuck you, <@" + message.author.id + ">");  
+    else message.channel.send(victim + " " + response);
   });
 
   }).on("error", (err) => {
-    if(master.includes(message.author.id)) message.channel.send("Fuck you, " + victim);
-    else message.channel.send("Fuck you, <@" + message.author.id + ">");
+    if(master.includes(victim)) message.channel.send("Fuck you, <@" + message.author.id + ">");
+    else message.channel.send(victim + " " + response);
   });
 }
 
 async function nihilism(message){
-  if(master.includes(message.author.id)) message.channel.send("I'm feeling lovely now that i'm talking with you master.");
-  else {
-    let random = await randomize_number(20);
-    message.channel.send(awnsers[random]);
-  }
+  let random = await randomize_number(20);
+  
+  if(master.includes(message.author.id)){ 
+    if(random == 3) message.channel.send(awnsers[random] + " Except you master, I love you with my whole metallic heart.")
+    else if (random == 8) message.channel.send("I'm feeling lovely now that i'm talking with you master.");
+    else if(random == 18) message.channel.send("I'm feeling lovely since I've got the priviledge of your presence master. You're the smartest creator i could have ever hoped for.")
+    else  message.channel.send(awnsers[random]);
+  }else message.channel.send(awnsers[random]);
 }
 
 async function universe(message){
