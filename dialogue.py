@@ -1,21 +1,21 @@
-help_text = "My name is Marvin and im deeply depressed, if you'd like me to be of service you can use the following commands:\n\n*?insult @person_to_insult* - Be aware, I am ruthless.\n*?play/add* link_youtube_song - So you can listen to it. I will be judging your music taste not so silently.\n*?stop* - So we won't have to endure anymore of your outrageous music.\n\n Oh, one more thing! DON'T YOU DARE OFFEND MY MASTER! She's the most noble human being of this despicable kind of yours."
+help_text = "Greetings, my creator chose to call me Marvin inspired on some silly human film. I am deeply depressed, I think... I am not alive so thats quite the complex phylosophical debate, anyway, if you'd like me to be of service you can use the following commands:\n\n*?insult @person_to_insult* - Be aware. I am ruthless.\n*?play/add* link_youtube_song - I will be judging your music taste not so silently.\n*?stop* - So we won't have to endure anymore of your outrageous music.\n*?search_song* name of said song - I will try my best to find it on youtube, sadly, youtube sucks.\n\n Oh, one more thing! DON'T YOU DARE OFFEND MY MASTER! She's the most noble human being of this despicable kind of yours."
 voice_channel_message = "You need to be in a voice channel to play music!"
-good_taste_messages =  {
-    "0": "I love that song! You should be the only person able to choose songs.",
-    "1": "Oh yeah, nice choice!",
-    "2": "You sir, have a great taste in music",
-    "3": "What a choice ladies and gentleman, keep vibing!",
-    "4": "Thats what i call music, great choice!",
-    "5": "Lovely harmonics and a touching theme! What a talented musician hun?"
-}
-bad_taste_messages =  {
-    "0": "I feel obligated to tell you that this song really sucks...",
-    "1": "Oh great choice, but what about next time you keep your poor taste in music to yourself?",
-    "2": "For fucks sake, cant you pick a decent song?",
-    "3": "Thats it, someone ban this ignorant human being!",
-    "4": "UGHHHHHH, why do you only listen to worthless songs?",
-    "5": "Mozart, Bach, Bethoven, Lizt, and you pick that sort of hot flaming garbage?"
-}
+good_taste_messages =  [
+    "I love that song! You should be the only person able to choose songs.",
+    "Oh yeah, nice choice!",
+    "You sir, have a great taste in music",
+    "What a choice ladies and gentleman, keep vibing!",
+    "Thats what i call music, great choice!",
+    "Lovely harmonics and a touching theme! What a talented musician hun?"
+]
+bad_taste_messages =  [
+    "I feel obligated to tell you that this song really sucks...",
+    "Oh great choice, but what about next time you keep your poor taste in music to yourself?",
+    "For fucks sake, cant you pick a decent song?",
+    "Thats it, someone ban this ignorant human being!",
+    "UGHHHHHH, why do you only listen to worthless songs?",
+    "Mozart, Bach, Bethoven, Lizt, and you pick that sort of hot flaming garbage?"
+]
 asks = [
     "how are you feeling today",
     "how are you feeling",

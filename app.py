@@ -1,82 +1,63 @@
-import discord
+import os, re, requests, urllib.parse, urllib.request, discord, music_player, random
 from discord.ext import commands,tasks
-import os
+from dialogue import help_text, voice_channel_message, bad_taste_messages, good_taste_messages
 from dotenv import load_dotenv
-from dialogue import help_text, voice_channel_message
-import youtube_dl
-import requests
+from bs4 import BeautifulSoup
+ 
 
 load_dotenv()
 
-# Get the API token from the .env file.
-DISCORD_TOKEN = os.getenv("discord_token")
-API = os.getenv("api")
 MASTER = os.getenv("master")
-
 client = discord.Client()
 bot = commands.Bot(command_prefix='?')
 
-youtube_dl.utils.bug_reports_message = lambda: ''
-
-ytdl_format_options = {
-    'format': 'bestaudio/best',
-    'restrictfilenames': True,
-    'noplaylist': True,
-    'nocheckcertificate': True,
-    'ignoreerrors': False,
-    'logtostderr': False,
-    'quiet': True,
-    'no_warnings': True,
-    'default_search': 'auto',
-    'source_address': '0.0.0.0' # bind to ipv4 since ipv6 addresses cause issues sometimes
-}
-
-ffmpeg_options = {
-    'options': '-vn'
-}
-
-
-ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
-
-class YTDLSource(discord.PCMVolumeTransformer):
-    def __init__(self, source, *, data, volume=0.5):
-        super().__init__(source, volume)
-        self.data = data
-        self.title = data.get('title')
-        self.url = ""
-
-    @classmethod
-    async def from_url(cls, url, *, loop=None, stream=False):
-        loop = loop or asyncio.get_event_loop()
-        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
-        if 'entries' in data:
-            # take first item from a playlist
-            data = data['entries'][0]
-        filename = data['title'] if stream else ytdl.prepare_filename(data)
-        return filename
 
 async def join(ctx):
     channel = ctx.author.voice.channel
     await channel.connect(reconnect=False)
     return channel
-    
-@bot.command()
-async def play(ctx, url):
-    
+
+
+async def find_best_url(music_name):
+    query_string = urllib.parse.urlencode({"search_query": music_name})
+    formatUrl = urllib.request.urlopen("https://www.youtube.com/results?" + query_string)
+    search_results = re.findall(r"watch\?v=(\S{11})", formatUrl.read().decode())
+
+    return "https://www.youtube.com/watch?v=" + "{}".format(search_results[0])
+
+
+async def play_song(ctx, url):
     if ctx.author.voice is None:
         await ctx.send(voice_channel_message)
         return 
+    await join(ctx)
 
-    try :
-        voice_channel = await join(ctx)
+    voice_channel = ctx.voice_client
+    async with ctx.typing():
+        filename, title = await music_player.YTDLSource.from_url(url, loop=bot.loop)
+        voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
+    await ctx.send('**Now playing:** {}'.format(title))
+    print(ctx.author.id, MASTER)
+    
+    if str(ctx.author.id) == MASTER: await ctx.send(good_taste_messages[random.randint(0,6)])
+    else: await ctx.send(bad_taste_messages[random.randint(0,6)])
+        
 
-        # async with ctx.typing():
-        #     filename = await YTDLSource.from_url(url, loop=bot.loop)
-        #     voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
-        # await ctx.send('**Now playing:** {}'.format(filename))
+@bot.command()
+async def search_song(ctx, *, music_name):
+    try:
+        url = await find_best_url(music_name)
+        print(url)
+        await play_song(ctx, url)
     except:
         await ctx.send("Oh no I'm malfunctioning! (I hope i short circuit myself to be completely honest)")
 
+@bot.command()
+async def play(ctx, url):
+    try :
+        await play_song(ctx, url)
+    except:
+        await ctx.send("Oh no I'm malfunctioning! (I hope i short circuit myself to be completely honest)")
 
 @bot.command()
 async def help_me(ctx):
@@ -84,7 +65,7 @@ async def help_me(ctx):
 
 @bot.command()
 async def insult(ctx, victim):
-    response = requests.get(API)
+    response = requests.get(os.getenv("api"))
     victim_id = victim.replace('<', '').replace('>','').replace('@','').replace('!','')
 
     if victim_id == MASTER: answer = "I would never offend my beautiful master! Fuck you  <@!" + str(ctx.message.author.id) + ">!"
@@ -94,4 +75,4 @@ async def insult(ctx, victim):
 
 
 if __name__ == "__main__" :
-    bot.run(DISCORD_TOKEN)
+    bot.run(os.getenv("discord_token"))
