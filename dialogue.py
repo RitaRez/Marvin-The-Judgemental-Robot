@@ -1,4 +1,5 @@
 help_text = "My name is Marvin and im deeply depressed, if you'd like me to be of service you can use the following commands:\n\n*?insult @person_to_insult* - Be aware, I am ruthless.\n*?play/add* link_youtube_song - So you can listen to it. I will be judging your music taste not so silently.\n*?stop* - So we won't have to endure anymore of your outrageous music.\n\n Oh, one more thing! DON'T YOU DARE OFFEND MY MASTER! She's the most noble human being of this despicable kind of yours."
+voice_channel_message = "You need to be in a voice channel to play music!"
 good_taste_messages =  {
     "0": "I love that song! You should be the only person able to choose songs.",
     "1": "Oh yeah, nice choice!",
